@@ -40,19 +40,25 @@
                                         <rect key="frame" x="0.0" y="60.333333333333314" width="374" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PUw-Pq-KS2">
-                                                <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="55" id="OxT-DK-KfD"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="OxS-JW-CXp">
-                                                <rect key="frame" x="51" y="0.0" width="272" height="31"/>
+                                                <rect key="frame" x="60" y="0.0" width="254" height="31"/>
                                                 <connections>
                                                     <action selector="seeking:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nr4-hq-qXG"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7He-v7-3NG">
-                                                <rect key="frame" x="328" y="0.0" width="46" height="30"/>
+                                                <rect key="frame" x="319" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="55" id="08J-qF-WOq"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -93,6 +99,7 @@
                         <outlet property="play_pause_btn" destination="RZr-TX-Q7J" id="5uS-IP-uFf"/>
                         <outlet property="progressBar" destination="OxS-JW-CXp" id="AzV-xe-Jxe"/>
                         <outlet property="songDuration" destination="7He-v7-3NG" id="owg-SS-REg"/>
+                        <outlet property="stackView" destination="DGv-Ze-9XS" id="MsN-Y4-JeJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

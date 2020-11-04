@@ -27,6 +27,7 @@ protocol PlayerDelegate: class {
     func updateProgresTime(time: Double)
     func updateDuration(time:Double)
     func updateState(state: PlayerState)
+    func updateBuffer(second:Double)
 }
 
 protocol MusicPlayerRule {
@@ -78,6 +79,8 @@ protocol PrivateMusicPlayerObserverRule {
     func playbackLikelyToKeepUp_loading()
     func playbackLikelyToKeepUp_ready()
     func getPlayerStatus() -> AVPlayer.Status
+    func setBufferObserver()
+    
 }
 
 protocol MusicPlayerObserverPresenterRule {

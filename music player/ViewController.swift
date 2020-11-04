@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var stackView: UIStackView!
+    
     @IBOutlet weak var progressBar: UISlider!
     
     @IBOutlet weak var songDuration: UILabel!
@@ -21,9 +23,23 @@ class ViewController: UIViewController {
     var currentState: PlayerState = .Stop
     var duration = 0.0
     
+    private var sliderThumbWidth:CGFloat?
+    private var bufferIndicator:UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        sliderThumbWidth = progressBar.thumbRect(forBounds: progressBar.bounds, trackRect: progressBar.trackRect(forBounds: progressBar.bounds), value: 0).size.width
+        
+        //bufferIndicator = UIView(frame: CGRect(x: stackView.frame.origin.x, y: stackView.frame.origin.y, width: 10, height: 30))
+        bufferIndicator = UIView(frame: CGRect.zero)
+        bufferIndicator?.backgroundColor = UIColor.lightGray
+        guard let bufferView = bufferIndicator else{
+            return
+        }
+        self.stackView.insertSubview(bufferView, belowSubview: progressBar)
+        //self.view.addSubview(bufferView)
+        //progressBar.addSubview(bufferView)
         
         MusicPlayer.sharedInstance.playerDelegate = self
         
@@ -52,6 +68,30 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: PlayerDelegate {
+    func updateBuffer(second: Double) {
+        
+        var frame = progressBar.frame
+        
+        guard let sliderThumbWidth = self.sliderThumbWidth else {
+            return
+        }
+        
+        
+        let buffer = second / duration
+        
+        print("buffer: \(buffer)")
+        
+        let width = frame.size.width
+        
+        frame.origin.x = progressBar.frame.origin.x
+        frame.size.width = CGFloat(buffer) * width
+        
+        let frameValue = frame
+        
+        bufferIndicator?.frame = frameValue
+        
+    }
+    
     func updateProgresTime(time: Double) {
         
         let percentTime = (time / duration) * 100

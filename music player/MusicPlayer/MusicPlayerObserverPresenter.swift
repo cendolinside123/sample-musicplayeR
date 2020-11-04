@@ -57,6 +57,13 @@ extension MusicPlayerObserverPresenter: MusicPlayerObserverPresenterRule {
                 controller?.doUpdateDuration(duration: duration)
                 controller?.setTimeObserver(interval: interval)
                 
+                let interval1 = CMTimeMake(value: 1, timescale: 1)
+                controller?.setBufferObserver()
+                
+            case "loadedTimeRanges":
+                 let interval1 = CMTimeMake(value: 1, timescale: 1)
+                controller?.setBufferObserver()
+                
             default:
                 break
             }

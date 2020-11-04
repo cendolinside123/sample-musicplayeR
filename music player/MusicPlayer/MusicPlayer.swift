@@ -25,6 +25,8 @@ class MusicPlayer: NSObject, MusicPlayerSetupRule {
     
     private var timeObserver: Any?
     
+    private var bufferObserver: Any?
+    
     private var lastPlayedItem: AVPlayerItem? = nil
     
     private var presenterObserver: MusicPlayerObserverPresenterRule?
@@ -89,6 +91,7 @@ extension MusicPlayer: MusicPlayerRule {
         
         let songUrl = AVPlayerItem(asset: setupUrl)
         playerItem = songUrl
+        playerItem?.preferredForwardBufferDuration = 5
         player = AVPlayer(playerItem: songUrl)
         isPlaying = .Loading
         registerObserver(item: songUrl)
@@ -167,6 +170,7 @@ extension MusicPlayer: PrivateMusicPlayerObserverRule {
         item.removeObserver(self, forKeyPath: "playbackBufferEmpty")
         item.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
         item.removeObserver(self, forKeyPath: "duration")
+        item.removeObserver(self, forKeyPath: "loadedTimeRanges")
     }
     
     func addNotification(item: AVPlayerItem) {
@@ -175,6 +179,7 @@ extension MusicPlayer: PrivateMusicPlayerObserverRule {
         item.addObserver(self, forKeyPath: "playbackBufferEmpty", options: .new, context: nil)
         item.addObserver(self, forKeyPath: "playbackLikelyToKeepUp", options: .new, context: nil)
         item.addObserver(self, forKeyPath: "duration", options: .new, context: nil)
+        item.addObserver(self, forKeyPath: "loadedTimeRanges", options: [.new], context: nil)
     }
     
     func getLastPlayedItem() -> AVPlayerItem? {
@@ -194,6 +199,22 @@ extension MusicPlayer: PrivateMusicPlayerObserverRule {
             //do time update
             self.playerDelegate?.updateProgresTime(time: time.seconds)
         })
+    }
+    
+    func setBufferObserver() {
+        
+        if let bufferValue = player.currentItem?.loadedTimeRanges.last?.timeRangeValue.end.seconds {
+            playerDelegate?.updateBuffer(second: bufferValue)
+        }
+        else {
+            print("buffer still empty")
+            
+            playerDelegate?.updateBuffer(second: 0)
+        }
+        
+        
+        
+        
     }
     
     func doUpdateDuration(duration: Double) {
